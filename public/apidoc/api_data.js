@@ -110,7 +110,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   },
   {
@@ -206,7 +206,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   },
   {
@@ -270,7 +270,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   },
   {
@@ -334,7 +334,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   },
   {
@@ -466,7 +466,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   },
   {
@@ -530,7 +530,7 @@ define({ "api": [
       ]
     },
     "version": "0.0.0",
-    "filename": "./app/Http/Controllers/Api/ChatController.php",
+    "filename": "app/Http/Controllers/Api/ChatController.php",
     "groupTitle": "Chat"
   }
 ] });
