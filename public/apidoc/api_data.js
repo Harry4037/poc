@@ -116,7 +116,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/api/chat-user-list",
-    "title": "User list",
+    "title": "Chat User list",
     "header": {
       "fields": {
         "Header": [

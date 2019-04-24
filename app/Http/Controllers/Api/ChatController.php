@@ -377,7 +377,7 @@ class ChatController extends Controller {
     }
 
     /**
-     * @api {get} /api/chat-user-list User list
+     * @api {get} /api/chat-user-list Chat User list
      * @apiHeader {String} Accept application/json. 
      * @apiName GetChatUserList
      * @apiGroup Chat
