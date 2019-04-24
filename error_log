@@ -1,0 +1,6 @@
+[24-Apr-2019 05:31:59 UTC] PHP Warning:  require(/home/dbaquincy/public_html/poc/vendor/autoload.php): failed to open stream: No such file or directory in /home/dbaquincy/public_html/poc/artisan on line 18
+[24-Apr-2019 05:31:59 UTC] PHP Fatal error:  require(): Failed opening required '/home/dbaquincy/public_html/poc/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/dbaquincy/public_html/poc/artisan on line 18
+[24-Apr-2019 05:32:51 UTC] PHP Warning:  require(/home/dbaquincy/public_html/poc/vendor/autoload.php): failed to open stream: No such file or directory in /home/dbaquincy/public_html/poc/artisan on line 18
+[24-Apr-2019 05:32:51 UTC] PHP Fatal error:  require(): Failed opening required '/home/dbaquincy/public_html/poc/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/dbaquincy/public_html/poc/artisan on line 18
+[24-Apr-2019 05:32:58 UTC] PHP Warning:  require(/home/dbaquincy/public_html/poc/vendor/autoload.php): failed to open stream: No such file or directory in /home/dbaquincy/public_html/poc/artisan on line 18
+[24-Apr-2019 05:32:58 UTC] PHP Fatal error:  require(): Failed opening required '/home/dbaquincy/public_html/poc/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php72/root/usr/share/pear') in /home/dbaquincy/public_html/poc/artisan on line 18
