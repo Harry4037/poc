@@ -246,8 +246,9 @@ class ChatController extends Controller {
             $chatMessage->message = $request->message;
             if ($chatMessage->save()) {
                 $user = User::find($chatMessage->receiver_id);
+                $sender = User::find($chatMessage->sender_id);
                 if ($user->device_token != Null) {
-                    $this->androidPushNotification($user->name, $chatMessage->message, $user->device_token, $user->id);
+                    $this->androidPushNotification($sender->name, $chatMessage->message, $user->device_token, $sender->id);
                 }
             }
             return $this->sendSuccessResponse("Message send successfully.", (object) []);
