@@ -56,7 +56,6 @@ class ChatController extends Controller {
      * @apiGroup Chat
      * 
      * 
-     * 
      * @apiSuccess {String} success true 
      * @apiSuccess {String} status_code (200 => success, 404 => Not found or failed). 
      * @apiSuccess {String} message User list.
@@ -76,7 +75,8 @@ class ChatController extends Controller {
       "email_verified_at": null,
       "device_token": "",
       "created_at": null,
-      "updated_at": null
+      "updated_at": null,
+      "message_count": 0
       },
       {
       "id": 3,
@@ -85,7 +85,8 @@ class ChatController extends Controller {
       "email_verified_at": null,
       "device_token": "",
       "created_at": null,
-      "updated_at": null
+      "updated_at": null,
+      "message_count": 0
       },
       {
       "id": 4,
@@ -94,7 +95,8 @@ class ChatController extends Controller {
       "email_verified_at": null,
       "device_token": "",
       "created_at": null,
-      "updated_at": null
+      "updated_at": null,
+      "message_count": 0
       }
       ]
       }
@@ -104,7 +106,23 @@ class ChatController extends Controller {
      */
     public function userList(Request $request, $userId) {
         $users = User::where('id', '!=', $userId)->get();
-        return $this->sendSuccessResponse("User list.", $users);
+        $data = [];
+        if ($users) {
+            $i = 0;
+            foreach ($users as $user) {
+                $messageCount = ChatMessages::where(["sender_id" => $user->id, "receiver_id" => $userId, "is_view" => 0])->count();
+                $data[$i]['id'] = $user->id;
+                $data[$i]['name'] = $user->name;
+                $data[$i]['email'] = $user->email;
+                $data[$i]['email_verified_at'] = $user->email_verified_at;
+                $data[$i]['device_token'] = $user->device_token;
+                $data[$i]['created_at'] = $user->created_at;
+                $data[$i]['updated_at'] = $user->updated_at;
+                $data[$i]['message_count'] = $messageCount;
+                $i++;
+            }
+        }
+        return $this->sendSuccessResponse("User list.", $data);
     }
 
     /**
@@ -229,7 +247,7 @@ class ChatController extends Controller {
             if ($chatMessage->save()) {
                 $user = User::find($chatMessage->receiver_id);
                 if ($user->device_token != Null) {
-                    $this->androidPushNotification($user->name, $chatMessage->message, $user->device_token);
+                    $this->androidPushNotification($user->name, $chatMessage->message, $user->device_token, $user->id);
                 }
             }
             return $this->sendSuccessResponse("Message send successfully.", (object) []);
@@ -403,6 +421,12 @@ class ChatController extends Controller {
                         );
                     })
                     ->get();
+            if($chatMessages){
+                foreach ($chatMessages as $chatMessage){
+                    $chatMessage->is_view = 1;
+                    $chatMessage->save();
+                }
+            }
 
             return $this->sendSuccessResponse("Messages list.", $chatMessages);
         } catch (\Exception $ex) {

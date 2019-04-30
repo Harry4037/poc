@@ -44,7 +44,7 @@ class Controller extends BaseController {
         ]);
     }
 
-    public function androidPushNotification($title, $message, $token) {
+    public function androidPushNotification($title, $message, $token, $id) {
 
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60 * 20)
@@ -56,6 +56,7 @@ class Controller extends BaseController {
 
         $dataBuilder = new PayloadDataBuilder();
         $dataBuilder->addData([
+            'id' => $id,
             'title' => $title,
             'message' => $message,
         ]);
