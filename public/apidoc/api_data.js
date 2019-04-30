@@ -328,7 +328,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n        {\n            \"status\": true,\n            \"status_code\": 200,\n            \"message\": \"Token updated.\",\n            \"data\": {}\n        }",
+          "content": "HTTP/1.1 200 OK\n        {\n            \"status\": true,\n            \"status_code\": 200,\n            \"message\": \"User list.\",\n            \"data\": [\n                {\n                    \"id\": 2,\n                    \"name\": \"Gaurav\",\n                    \"email\": \"\",\n                    \"email_verified_at\": null,\n                    \"device_token\": \"\",\n                    \"created_at\": null,\n                    \"updated_at\": null\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Akash\",\n                    \"email\": \"\",\n                    \"email_verified_at\": null,\n                    \"device_token\": \"\",\n                    \"created_at\": null,\n                    \"updated_at\": null\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Pinki\",\n                    \"email\": \"\",\n                    \"email_verified_at\": null,\n                    \"device_token\": \"\",\n                    \"created_at\": null,\n                    \"updated_at\": null\n                }\n            ]\n        }",
           "type": "json"
         }
       ]
@@ -488,6 +488,26 @@ define({ "api": [
     },
     "name": "PostUpdatetoken",
     "group": "Chat",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>User id User id*.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "device_token",
+            "description": "<p>Device token User device token*.</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [

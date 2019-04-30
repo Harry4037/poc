@@ -24,22 +24,22 @@ class ChatController extends Controller {
      * 
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-        {
-            "status": true,
-            "status_code": 200,
-            "message": "User detail.",
-            "data": {
-                "user": {
-                    "id": 4,
-                    "name": "Akash",
-                    "email": "akash@gmail.com",
-                    "email_verified_at": null,
-                    "device_token": null,
-                    "created_at": null,
-                    "updated_at": null
-                }
-            }
-        }
+      {
+      "status": true,
+      "status_code": 200,
+      "message": "User detail.",
+      "data": {
+      "user": {
+      "id": 4,
+      "name": "Akash",
+      "email": "akash@gmail.com",
+      "email_verified_at": null,
+      "device_token": null,
+      "created_at": null,
+      "updated_at": null
+      }
+      }
+      }
      * 
      * 
      * 
@@ -48,7 +48,7 @@ class ChatController extends Controller {
         $user['user'] = User::inRandomOrder()->first();
         return $this->sendSuccessResponse("User detail.", $user);
     }
-    
+
     /**
      * @api {get} /api/user-list/{user_id} User List
      * @apiHeader {String} Accept application/json. 
@@ -64,18 +64,46 @@ class ChatController extends Controller {
      * 
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-        {
-            "status": true,
-            "status_code": 200,
-            "message": "Token updated.",
-            "data": {}
-        }
+      {
+      "status": true,
+      "status_code": 200,
+      "message": "User list.",
+      "data": [
+      {
+      "id": 2,
+      "name": "Gaurav",
+      "email": "",
+      "email_verified_at": null,
+      "device_token": "",
+      "created_at": null,
+      "updated_at": null
+      },
+      {
+      "id": 3,
+      "name": "Akash",
+      "email": "",
+      "email_verified_at": null,
+      "device_token": "",
+      "created_at": null,
+      "updated_at": null
+      },
+      {
+      "id": 4,
+      "name": "Pinki",
+      "email": "",
+      "email_verified_at": null,
+      "device_token": "",
+      "created_at": null,
+      "updated_at": null
+      }
+      ]
+      }
      * 
      * 
      * 
      */
     public function userList(Request $request, $userId) {
-        $users = User::where('id','!=',$userId)->get();
+        $users = User::where('id', '!=', $userId)->get();
         return $this->sendSuccessResponse("User list.", $users);
     }
 
@@ -85,7 +113,8 @@ class ChatController extends Controller {
      * @apiName PostUpdatetoken
      * @apiGroup Chat
      * 
-     * 
+     * @apiParam {String} user_id User id User id*. 
+     * @apiParam {String} device_token Device token User device token*. 
      * 
      * @apiSuccess {String} success true 
      * @apiSuccess {String} status_code (200 => success, 404 => Not found or failed). 
@@ -94,12 +123,12 @@ class ChatController extends Controller {
      * 
      * @apiSuccessExample {json} Success-Response:
      * HTTP/1.1 200 OK
-        {
-            "status": true,
-            "status_code": 200,
-            "message": "Token updated.",
-            "data": {}
-        }
+      {
+      "status": true,
+      "status_code": 200,
+      "message": "Token updated.",
+      "data": {}
+      }
      * 
      * 
      * 
@@ -197,7 +226,12 @@ class ChatController extends Controller {
             $chatMessage->sender_id = $request->sender_id;
             $chatMessage->receiver_id = $request->receiver_id;
             $chatMessage->message = $request->message;
-            $chatMessage->save();
+            if ($chatMessage->save()) {
+                $user = User::find($chatMessage->receiver_id);
+                if ($user->device_token != Null) {
+                    $this->androidPushNotification($user->name, $chatMessage->message, $user->device_token);
+                }
+            }
             return $this->sendSuccessResponse("Message send successfully.", (object) []);
         } catch (\Exception $ex) {
             return $this->administratorResponse();
@@ -370,7 +404,7 @@ class ChatController extends Controller {
                     })
                     ->get();
 
-            return $this->sendErrorResponse("Messages list.", $chatMessages);
+            return $this->sendSuccessResponse("Messages list.", $chatMessages);
         } catch (\Exception $ex) {
             return $this->administratorResponse();
         }

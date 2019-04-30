@@ -6,6 +6,10 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use LaravelFCM\Facades\FCM;
 
 class Controller extends BaseController {
 
@@ -38,6 +42,30 @@ class Controller extends BaseController {
                     'message' => "Something went be wrong. Please contact administrator.",
                     'data' => (object) []
         ]);
+    }
+
+    public function androidPushNotification($title, $message, $token) {
+
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60 * 20)
+                ->setPriority('high');
+
+        $notificationBuilder = new PayloadNotificationBuilder($title);
+        $notificationBuilder->setBody($message)
+                ->setSound('default');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData([
+            'title' => $title,
+            'message' => $message,
+        ]);
+
+        $option = $optionBuilder->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+        return $downstreamResponse;
     }
 
 }
