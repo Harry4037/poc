@@ -159,10 +159,19 @@ class ChatController extends Controller {
             if (!$request->device_token) {
                 return $this->sendErrorResponse("Device token missing.", (object) []);
             }
-
+            if (!$request->device_id) {
+                return $this->sendErrorResponse("Device id missing.", (object) []);
+            }
+            $deviceId = User::where("device_id", $request->device_id)->first();
+            if($deviceId){
+                $deviceId->device_id = '';
+                $deviceId->device_token = '';
+                $deviceId->save();
+            }
             $user = User::find($request->user_id);
             if ($user) {
                 $user->device_token = $request->device_token;
+                $user->device_id = $request->device_id;
                 $user->save();
             } else {
                 return $this->sendErrorResponse("User not found.", (object) []);
